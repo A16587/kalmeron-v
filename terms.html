@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شروط الاستخدام - منصة الطالب الذكي</title>
+    <!-- نفس خطوط الموقع الأصلي Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Cairo", sans-serif;
+            background: linear-gradient(135deg, #0A192F, #112240);
+            color: #CCD6F6;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .terms-card {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(17, 34, 64, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 30px 50px -20px #000000cc;
+            overflow: hidden;
+            position: relative;
+        }
+        .terms-image {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+        .terms-image i {
+            font-size: 5rem;
+            color: #64FFDA;
+            filter: drop-shadow(0 0 15px rgba(100, 255, 218, 0.5));
+            background: rgba(100, 255, 218, 0.1);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            color: #64FFDA;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        .last-updated {
+            text-align: center;
+            color: #64FFDA;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.3);
+            padding-bottom: 1rem;
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #64FFDA;
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 i {
+            color: #64FFDA;
+            font-size: 1.8rem;
+        }
+        p {
+            margin-bottom: 1.2rem;
+            color: #CCD6F6;
+            font-weight: 400;
+        }
+        ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        ul li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #CCD6F6;
+        }
+        ul li i {
+            color: #64FFDA;
+            margin-top: 5px;
+            min-width: 20px;
+        }
+        .highlight-box {
+            background: rgba(10, 25, 47, 0.7);
+            border-radius: 2rem;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border: 2px solid #64FFDA;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .highlight-box i {
+            font-size: 2rem;
+            color: #64FFDA;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+            flex: 1;
+            color: #CCD6F6;
+        }
+        .back-home {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #64FFDA;
+            text-decoration: none;
+            border: 2px solid #64FFDA;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            background: #64FFDA;
+            color: #0A192F;
+            transform: translateY(-2px);
+        }
+        a {
+            color: #64FFDA;
+            text-decoration: none;
+            border-bottom: 1px dotted #64FFDA;
+            transition: 0.3s;
+        }
+        a:hover {
+            color: #4ac7b0;
+            border-bottom-color: #4ac7b0;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .note-box {
+            background: rgba(100, 255, 218, 0.05);
+            border-right: 4px solid #64FFDA;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 1.5rem 0;
+        }
+        .note-box i {
+            color: #64FFDA;
+            margin-left: 10px;
+        }
+        .highlight {
+            color: #64FFDA;
+            font-weight: 700;
+        }
+        @media (max-width: 600px) {
+            .terms-card { 
+                padding: 1.5rem; 
+                border-radius: 1.5rem; 
+            }
+            h1 { 
+                font-size: 2rem; 
+            }
+            h2 { 
+                font-size: 1.3rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="terms-card">
+            <!-- صورة رمزية -->
+            <div class="terms-image">
+                <i class="fas fa-file-contract"></i>
+                <i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>
+            </div>
+
+            <h1>شروط الاستخدام</h1>
+            <div class="last-updated">آخر تحديث: 27 فبراير 2026</div>
+
+            <div class="note-box">
+                <i class="fas fa-heart"></i>
+                <strong>أهلاً بك في عائلة الطالب الذكي</strong> - باستخدامك للمنصة، أنت توافق على الشروط دي عشان نضمن ليك ولزمايلك تجربة تعليمية آمنة وممتعة.
+            </div>
+
+            <p>مرحباً بك في <strong class="highlight">منصة الطالب الذكي</strong>. باستخدامك لهذه المنصة التعليمية ومشاهدة الدروس التفاعلية، فإنك توافق على الالتزام بالشروط والأحكام التالية. يرجى قراءتها بعناية.</p>
+
+            <h2><i class="fas fa-check-circle"></i> قبول الشروط</h2>
+            <p>بمجرد دخولك أو استخدامك للمنصة، فإنك تقر بأنك قرأت وفهمت وتوافق على الالتزام بهذه الشروط. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام المنصة.</p>
+
+            <h2><i class="fas fa-video"></i> استخدام الدروس والمحتوى</h2>
+            <ul>
+                <li><i class="fas fa-angle-left"></i> جميع الدروس والفيديوهات المتاحة على المنصة هي للاستخدام الشخصي والتعليمي فقط.</li>
+                <li><i class="fas fa-angle-left"></i> لا يُسمح بإعادة رفع أو توزيع أو نسخ أي من محتوى المنصة على منصات أخرى بدون إذن كتابي مسبق.</li>
+                <li><i class="fas fa-angle-left"></i> الدروس مقدمة لأغراض تعليمية وتفاعلية، ونحرص على أن تكون 100% مطابقة للمناهج الدراسية.</li>
+                <li><i class="fas fa-angle-left"></i> يمكنك مشاهدة الدروس في أي وقت وإعادة مشاهدتها حسب احتياجك.</li>
+            </ul>
+
+            <h2><i class="fas fa-user"></i> التسجيل والحسابات</h2>
+            <ul>
+                <li><i class="fas fa-angle-left"></i> لتتمكن من استخدام المنصة، يجب عليك التسجيل بالاسم ورقم الموبايل الصحيح.</li>
+                <li><i class="fas fa-angle-left"></i> أنت مسؤول عن الحفاظ على سرية معلومات حسابك، وكل الأنشطة التي تتم من خلاله.</li>
+                <li><i class="fas fa-angle-left"></i> ممنوع استخدام هوية مزيفة أو بيانات وهمية للتسجيل.</li>
+                <li><i class="fas fa-angle-left"></i> في حالة فقدان الوصول لحسابك، يمكنك التواصل معنا لاستعادته.</li>
+            </ul>
+
+            <h2><i class="fas fa-comments"></i> التعليقات والتفاعل</h2>
+            <ul>
+                <li><i class="fas fa-angle-left"></i> التعليقات المتاحة تحت كل درس هي فضاء للنقاش الهادف وتبادل المعلومات بين الطلاب.</li>
+                <li><i class="fas fa-angle-left"></i> يُمنع تماماً استخدام التعليقات لنشر أي محتوى مسيء، أو ألفاظ غير لائقة، أو تنمر على الآخرين.</li>
+                <li><i class="fas fa-angle-left"></i> نحتفظ بالحق في حذف أي تعليق يخالف قواعد الاحترام المتبادل.</li>
+                <li><i class="fas fa-angle-left"></i> التكرار المتعمد للمخالفات قد يؤدي إلى حظر الحساب.</li>
+            </ul>
+
+            <h2><i class="fas fa-copyright"></i> الملكية الفكرية</h2>
+            <p>جميع المحتويات المعروضة في المنصة (فيديوهات، نصوص، تصاميم، شعارات، شخصيات كرتونية) هي ملك حصري لـ <strong class="highlight">منصة الطالب الذكي</strong> أو مرخصة لنا، ومحمية بموجب قوانين حقوق النشر. لا يُسمح بنسخ أو إعادة نشر أي جزء دون إذن كتابي مسبق.</p>
+
+            <h2><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</h2>
+            <ul>
+                <li><i class="fas fa-angle-left"></i> نبذل قصارى جهدنا لتقديم محتوى دقيق ومفيد، ولكن لا نضمن خلوه من الأخطاء تماماً.</li>
+                <li><i class="fas fa-angle-left"></i> المنصة تقدم كخدمة تعليمية مساعدة، ولا نتحمل مسؤولية أي تقصير دراسي نتيجة الاعتماد فقط على محتوانا دون الرجوع للمصادر الأساسية.</li>
+                <li><i class="fas fa-angle-left"></i> قد تتوقف المنصة مؤقتاً للصيانة أو التحديث، وسنحاول إشعاركم بذلك مسبقاً قدر الإمكان.</li>
+            </ul>
+
+            <h2><i class="fas fa-ban"></i> السلوك الممنوع</h2>
+            <ul>
+                <li><i class="fas fa-angle-left"></i> محاولة اختراق المنصة أو الوصول غير المصرح به إلى أنظمتنا أو بيانات المستخدمين الآخرين.</li>
+                <li><i class="fas fa-angle-left"></i> استخدام أدوات آلية (مثل البوتات) للتفاعل مع المنصة بطريقة غير طبيعية.</li>
+                <li><i class="fas fa-angle-left"></i> استغلال المنصة في الترويج لأي منتجات أو خدمات أخرى بدون إذن.</li>
+                <li><i class="fas fa-angle-left"></i> انتحال شخصية الآخرين أو التعدي على حساباتهم.</li>
+            </ul>
+
+            <h2><i class="fas fa-bell"></i> الإشعارات</h2>
+            <p>باستخدامك للمنصة، فإنك توافق على استقبال إشعارات تتعلق بـ:</p>
+            <ul>
+                <li><i class="fas fa-angle-left"></i> الدروس الجديدة التي نضيفها.</li>
+                <li><i class="fas fa-angle-left"></i> تفاعل زملائك مع تعليقاتك (ردود وإعجابات).</li>
+                <li><i class="fas fa-angle-left"></i> إنجازاتك وتقدمك في المنصة.</li>
+                <li><i class="fas fa-angle-left"></i> تحديثات مهمة على الخدمة أو الشروط.</li>
+            </ul>
+            <p>يمكنك إيقاف الإشعارات في أي وقت من خلال إعدادات المتصفح.</p>
+
+            <h2><i class="fas fa-pen"></i> التعديل على الشروط</h2>
+            <p>نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم نشر التعديلات على هذه الصفحة مع تحديث التاريخ أعلاه. استمرارك في استخدام المنصة بعد التعديل يعني موافقتك على الشروط الجديدة.</p>
+
+            <h2><i class="fas fa-envelope"></i> التواصل معنا</h2>
+            <p>للاستفسارات بخصوص هذه الشروط أو للإبلاغ عن أي مخالفة، يرجى مراسلتنا على:</p>
+            <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+                <i class="fas fa-envelope" style="color: #64FFDA;"></i> 
+                <a href="mailto:legal@talbelzaki.com"></a>
+            </p>
+            <p>أو من خلال صفحة <a href="about-contact.html">اتصل بنا</a>.</p>
+
+            <!-- شريط تأكيد -->
+            <div class="highlight-box">
+                <i class="fas fa-gavel"></i>
+                <p>باستخدامك للمنصة، أنت توافق على هذه الشروط وتتعهد بالالتزام بها.</p>
+            </div>
+
+            <!-- العودة للصفحة الرئيسية -->
+            <div class="text-center">
+                <a href="index.html" class="back-home"><i class="fas fa-home"></i> العودة للصفحة الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

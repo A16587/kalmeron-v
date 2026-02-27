@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الأدمن - منصة الطالب الذكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* جميع الأنماط الموجودة كما هي */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0A192F, #112240);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* ===== Header ===== */
+        header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 800;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .header-title {
+            color: #64FFDA;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-badge {
+            background: #FF5555;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+
+        .back-link {
+            font-size: 16px; 
+            color: #CCD6F6; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: #64FFDA;
+        }
+
+        /* ===== Container ===== */
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* ===== Stats Cards ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #64FFDA;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64FFDA;
+            font-size: 24px;
+        }
+
+        .stat-info h3 {
+            font-size: 28px;
+            color: white;
+        }
+
+        .stat-info p {
+            color: #8892B0;
+            font-size: 14px;
+        }
+
+        /* ===== Section Title ===== */
+        .section-title {
+            font-size: 24px;
+            color: #64FFDA;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* ===== Add Lesson Form (NEW) ===== */
+        .add-lesson-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .add-lesson-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .add-lesson-form input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .add-lesson-form input:focus {
+            outline: none;
+            border-color: #64FFDA;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .add-lesson-form input::placeholder {
+            color: #8892B0;
+        }
+
+        .add-lesson-btn {
+            background: #64FFDA;
+            color: #0A192F;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .add-lesson-btn:hover {
+            background: #4ac7b0;
+            transform: translateY(-2px);
+        }
+
+        /* ===== Lessons Management Table (NEW) ===== */
+        .lessons-management-section {
+            margin-bottom: 40px;
+        }
+
+        .lessons-table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .lessons-table th {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64FFDA;
+            padding: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .lessons-table td {
+            padding: 15px;
+            text-align: center;
+            color: #CCD6F6;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lessons-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .lessons-table tr:hover td {
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        .lesson-id-badge {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64FFDA;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        .lesson-url-preview {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #8892B0;
+            font-size: 13px;
+        }
+
+        .delete-lesson-btn {
+            background: rgba(255, 85, 85, 0.1);
+            color: #FF5555;
+            border: 1px solid #FF5555;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .delete-lesson-btn:hover {
+            background: #FF5555;
+            color: white;
+        }
+
+        /* ===== Users Table ===== */
+        .users-section {
+            margin-bottom: 40px;
+        }
+
+        .users-table-wrapper {
+            overflow-x: auto;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .users-table th {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64FFDA;
+            padding: 15px;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 2px solid #64FFDA;
+        }
+
+        .users-table td {
+            padding: 12px 15px;
+            text-align: center;
+            color: #CCD6F6;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .users-table tr:hover td {
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: #64FFDA;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #0A192F;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-id {
+            font-size: 12px;
+            color: #8892B0;
+        }
+
+        /* ===== Comments Section ===== */
+        .comments-wrapper {
+            display: grid;
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .lesson-card:hover {
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+
+        .lesson-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(100, 255, 218, 0.05);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lesson-card-header:hover {
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .lesson-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lesson-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64FFDA;
+            font-size: 20px;
+        }
+
+        .lesson-name {
+            color: #CCD6F6;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .lesson-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .comment-count-badge {
+            background: #64FFDA;
+            color: #0A192F;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .toggle-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64FFDA;
+            transition: 0.3s;
+        }
+
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .lesson-card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 20px;
+        }
+
+        .lesson-card-body.expanded {
+            max-height: 2000px;
+            padding: 20px;
+        }
+
+        .card-actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .delete-all-btn {
+            background: rgba(255, 85, 85, 0.1);
+            color: #FF5555;
+            border: 1px solid #FF5555;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .delete-all-btn:hover {
+            background: #FF5555;
+            color: white;
+        }
+
+        .admin-comment-card {
+            background: rgba(17, 34, 64, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: 0.3s;
+            border-right: 3px solid #64FFDA;
+        }
+
+        .admin-comment-card:hover {
+            background: rgba(17, 34, 64, 1);
+            transform: translateX(-5px);
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .user-name {
+            color: #64FFDA;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .comment-date {
+            color: #8892B0;
+            font-size: 12px;
+        }
+
+        .comment-text {
+            color: #CCD6F6;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .delete-btn {
+            background: rgba(255, 85, 85, 0.1);
+            color: #FF5555;
+            border: 1px solid #FF5555;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .delete-btn:hover {
+            background: #FF5555;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8892B0;
+            font-size: 18px;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #64FFDA;
+            font-size: 20px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64FFDA;
+            border-radius: 4px;
+        }
+
+        @media(max-width: 768px) {
+            .add-lesson-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .add-lesson-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .lesson-card-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .lesson-info {
+                flex-direction: column;
+            }
+
+            .lesson-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .admin-comment-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .delete-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .card-actions-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .delete-all-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .lessons-table td:nth-child(3) {
+                display: none;
+            }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(20px); }
+        }
+
+        .deleting {
+            animation: fadeOut 0.3s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-title">
+        <i class="fas fa-shield-alt"></i>
+        لوحة تحكم الأدمن
+        <span class="admin-badge">مسؤول</span>
+    </div>
+    <a href="index.html" class="back-link">
+        <i class="fas fa-arrow-right"></i>
+        العودة للموقع
+    </a>
+</header>
+
+<div class="container">
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+                <h3 id="totalUsers">0</h3>
+                <p>إجمالي الأعضاء</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-comments"></i></div>
+            <div class="stat-info">
+                <h3 id="totalComments">0</h3>
+                <p>إجمالي التعليقات</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-video"></i></div>
+            <div class="stat-info">
+                <h3 id="totalLessons">0</h3>
+                <p>عدد الدروس</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Add Lesson Section -->
+    <div class="add-lesson-section">
+        <h2 class="section-title"><i class="fas fa-plus-circle"></i> إضافة درس جديد</h2>
+        <div class="add-lesson-form">
+            <input type="text" id="newLessonTitle" placeholder="عنوان الدرس (مثال: الدرس الثالث)" dir="rtl">
+            <input type="url" id="newLessonUrl" placeholder="رابط الفيديو (Google Drive link)" dir="ltr">
+            <button class="add-lesson-btn" onclick="addNewLesson()">
+                <i class="fas fa-plus"></i>
+                إضافة الدرس
+            </button>
+        </div>
+    </div>
+
+    <!-- NEW: Manage Lessons Section -->
+    <div class="lessons-management-section">
+        <h2 class="section-title"><i class="fas fa-edit"></i> إدارة الدروس</h2>
+        <div id="loadingLessons" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> جاري تحميل الدروس...
+        </div>
+        <div id="lessonsTableWrapper" style="display: none;">
+            <table class="lessons-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>عنوان الدرس</th>
+                        <th>معرف الدرس</th>
+                        <th>الرابط</th>
+                        <th>التحكم</th>
+                    </tr>
+                </thead>
+                <tbody id="lessonsTableBody">
+                    <!-- سيتم إضافة الدروس هنا -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Users Section -->
+    <div class="users-section">
+        <h2 class="section-title"><i class="fas fa-users-cog"></i> إدارة الأعضاء</h2>
+        <div id="loadingUsers" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> جاري تحميل الأعضاء...
+        </div>
+        <div class="users-table-wrapper" id="usersTableWrapper" style="display: none;">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>المستخدم</th>
+                        <th>رقم الموبايل</th>
+                        <th>تاريخ الانضمام</th>
+                        <th>آخر نشاط</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- سيتم إضافة الأعضاء هنا -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <h2 class="section-title"><i class="fas fa-list-ul"></i> إدارة التعليقات</h2>
+    
+    <div id="loadingComments" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> جاري تحميل التعليقات...
+    </div>
+
+    <div id="commentsWrapper" class="comments-wrapper">
+        <!-- Comments will be injected here -->
+    </div>
+</div>
+
+<!-- Firebase -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getDatabase, ref, get, set, remove, onValue, push } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDv348xdxShxrVVAEtIlCpeBfKqvOfY-0o",
+        authDomain: "talk-19c55.firebaseapp.com",
+        databaseURL: "https://talk-19c55-default-rtdb.firebaseio.com",
+        projectId: "talk-19c55",
+        storageBucket: "talk-19c55.firebasestorage.app",
+        messagingSenderId: "908101479029",
+        appId: "1:908101479029:web:9742bb19ffcbae2c6a663c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // حالة فتح/غلق كل بطاقة درس للتعليقات
+    const expandedCards = {};
+
+    // ========== LESSONS MANAGEMENT (NEW) ==========
+    let lessons = [];
+
+    // Load lessons from Firebase
+    async function loadLessons() {
+        const loading = document.getElementById('loadingLessons');
+        const tableWrapper = document.getElementById('lessonsTableWrapper');
+        const tableBody = document.getElementById('lessonsTableBody');
+        const totalLessonsEl = document.getElementById('totalLessons');
+
+        try {
+            const snapshot = await get(ref(db, 'lessons'));
+            
+            if (snapshot.exists()) {
+                // Convert object to array and sort by order or creation date
+                const lessonsData = snapshot.val();
+                lessons = Object.entries(lessonsData).map(([id, data]) => ({ 
+                    id, 
+                    ...data,
+                    // Ensure order field exists
+                    order: data.order || 999
+                }));
+                
+                // Sort by order
+                lessons.sort((a, b) => a.order - b.order);
+            } else {
+                lessons = [];
+            }
+
+            // تحديث إجمالي الدروس
+            totalLessonsEl.textContent = lessons.length;
+
+            // بناء جدول الدروس
+            let html = '';
+            lessons.forEach((lesson, index) => {
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${lesson.title || 'بدون عنوان'}</strong></td>
+                        <td><span class="lesson-id-badge">${lesson.id}</span></td>
+                        <td><div class="lesson-url-preview" title="${lesson.url}">${lesson.url || 'لا يوجد رابط'}</div></td>
+                        <td>
+                            <button class="delete-lesson-btn" onclick="deleteLesson('${lesson.id}')">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (lessons.length === 0) {
+                html = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #8892B0;">
+                            <i class="fas fa-inbox" style="font-size: 48px; display: block; margin-bottom: 10px;"></i>
+                            لا توجد دروس مضافة حتى الآن
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tableBody.innerHTML = html;
+            loading.style.display = 'none';
+            tableWrapper.style.display = 'block';
+
+        } catch (error) {
+            console.error("خطأ في تحميل الدروس:", error);
+            loading.innerHTML = `
+                <i class="fas fa-exclamation-triangle" style="color: #FF5555;"></i>
+                حدث خطأ في تحميل الدروس
+            `;
+        }
+    }
+
+    // Add new lesson function (global)
+    window.addNewLesson = async function() {
+        const titleInput = document.getElementById('newLessonTitle');
+        const urlInput = document.getElementById('newLessonUrl');
+        
+        const title = titleInput.value.trim();
+        let url = urlInput.value.trim();
+
+        if (!title || !url) {
+            alert('الرجاء إدخال عنوان الدرس ورابط الفيديو');
+            return;
+        }
+
+        // Validate and format Google Drive URL
+        if (url.includes('drive.google.com')) {
+            // Convert to embed URL if needed
+            const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (fileIdMatch) {
+                const fileId = fileIdMatch[1];
+                url = `https://drive.google.com/file/d/${fileId}/preview`;
+            } else {
+                alert('رابط Google Drive غير صحيح. يرجى استخدام رابط مشاركة صحيح');
+                return;
+            }
+        }
+
+        // Generate a unique ID for the lesson
+        const lessonId = 'video_' + Date.now();
+
+        // Get current lessons to determine order
+        const snapshot = await get(ref(db, 'lessons'));
+        const existingLessons = snapshot.val() || {};
+        const order = Object.keys(existingLessons).length + 1;
+
+        // Save to Firebase
+        const lessonRef = ref(db, `lessons/${lessonId}`);
+        await set(lessonRef, {
+            id: lessonId,
+            title: title,
+            url: url,
+            order: order,
+            createdAt: new Date().toISOString()
+        });
+
+        // Clear inputs
+        titleInput.value = '';
+        urlInput.value = '';
+
+        // Show success message (optional)
+        alert('تم إضافة الدرس بنجاح!');
+        
+        // Reload lessons list
+        loadLessons();
+    };
+
+    // Delete lesson function (global)
+    window.deleteLesson = async function(lessonId) {
+        if (!confirm('هل أنت متأكد من حذف هذا الدرس؟')) {
+            return;
+        }
+
+        try {
+            // Delete lesson
+            await remove(ref(db, `lessons/${lessonId}`));
+            
+            // Also delete all comments for this lesson
+            await remove(ref(db, `videos/${lessonId}/comments`));
+            
+            // Also delete all likes for this lesson
+            await remove(ref(db, `videos/${lessonId}/likes`));
+
+            // Show success message
+            alert('تم حذف الدرس وجميع بياناته بنجاح');
+            
+            // Reload lessons list
+            loadLessons();
+            
+        } catch (error) {
+            console.error("خطأ في حذف الدرس:", error);
+            alert('حدث خطأ أثناء حذف الدرس');
+        }
+    };
+
+    // ========== USERS SECTION ==========
+    async function loadUsers() {
+        const loading = document.getElementById('loadingUsers');
+        const tableWrapper = document.getElementById('usersTableWrapper');
+        const tableBody = document.getElementById('usersTableBody');
+        const totalUsersEl = document.getElementById('totalUsers');
+
+        try {
+            const snapshot = await get(ref(db, 'users'));
+            
+            if (snapshot.exists()) {
+                const users = snapshot.val();
+                const usersArray = Object.entries(users).map(([id, data]) => ({ id, ...data }));
+                
+                // تحديث إجمالي الأعضاء
+                totalUsersEl.textContent = usersArray.length;
+
+                // ترتيب الأعضاء حسب تاريخ الانضمام (الأحدث أولاً)
+                usersArray.sort((a, b) => new Date(b.joinDate) - new Date(a.joinDate));
+
+                // بناء جدول الأعضاء
+                let html = '';
+                usersArray.forEach((user, index) => {
+                    const joinDate = user.joinDate ? new Date(user.joinDate).toLocaleDateString('ar-EG', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'غير متوفر';
+
+                    // آخر نشاط (من completed lessons أو أي تفاعل آخر)
+                    const lastActivity = user.lastActivity ? new Date(user.lastActivity).toLocaleDateString('ar-EG', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : joinDate;
+
+                    html += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>
+                                <div class="user-info">
+                                    <span class="user-avatar">${user.name ? user.name.charAt(0) : '?'}</span>
+                                    <div>
+                                        <div>${user.name || 'غير معروف'}</div>
+                                        <div class="user-id">${user.id || ''}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td dir="ltr">${user.phone || 'غير متوفر'}</td>
+                            <td>${joinDate}</td>
+                            <td>${lastActivity}</td>
+                        </tr>
+                    `;
+                });
+
+                tableBody.innerHTML = html;
+                loading.style.display = 'none';
+                tableWrapper.style.display = 'block';
+            } else {
+                totalUsersEl.textContent = '0';
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #8892B0;">
+                            <i class="fas fa-user-slash" style="font-size: 48px; display: block; margin-bottom: 10px;"></i>
+                            لا يوجد أعضاء مسجلين حتى الآن
+                        </td>
+                    </tr>
+                `;
+                loading.style.display = 'none';
+                tableWrapper.style.display = 'block';
+            }
+        } catch (error) {
+            console.error("خطأ في تحميل الأعضاء:", error);
+            loading.innerHTML = `
+                <i class="fas fa-exclamation-triangle" style="color: #FF5555;"></i>
+                حدث خطأ في تحميل الأعضاء
+            `;
+        }
+    }
+
+    // ========== COMMENTS SECTION ==========
+    window.deleteComment = async function(videoId, commentId, element) {
+        if (element) {
+            element.classList.add('deleting');
+        }
+
+        const commentRef = ref(db, `videos/${videoId}/comments/${commentId}`);
+        try {
+            await remove(commentRef);
+        } catch (error) {
+            console.error("خطأ في الحذف:", error);
+        }
+    }
+
+    window.deleteAllComments = async function(videoId) {
+        const commentsRef = ref(db, `videos/${videoId}/comments`);
+        try {
+            await remove(commentsRef);
+        } catch (error) {
+            console.error("خطأ في حذف الكل:", error);
+        }
+    }
+
+    window.toggleCard = function(lessonId) {
+        const body = document.getElementById(`cardBody_${lessonId}`);
+        const icon = document.getElementById(`toggleIcon_${lessonId}`);
+        
+        if (body.classList.contains('expanded')) {
+            body.classList.remove('expanded');
+            icon.classList.add('rotated');
+            expandedCards[lessonId] = false;
+        } else {
+            body.classList.add('expanded');
+            icon.classList.remove('rotated');
+            expandedCards[lessonId] = true;
+        }
+    }
+
+    async function fetchAllCommentsData() {
+        const allData = {};
+        
+        // Get lessons first
+        const lessonsSnapshot = await get(ref(db, 'lessons'));
+        const lessonsData = lessonsSnapshot.val() || {};
+        const lessonsList = Object.entries(lessonsData).map(([id, data]) => ({ id, title: data.title }));
+        
+        const promises = lessonsList.map(async (lesson) => {
+            const snapshot = await get(ref(db, `videos/${lesson.id}/comments`));
+            allData[lesson.id] = {
+                comments: snapshot.val() || {},
+                lessonTitle: lesson.title
+            };
+        });
+
+        await Promise.all(promises);
+        renderAllComments(allData, lessonsList);
+    }
+
+    function renderAllComments(allCommentsData, lessonsList) {
+        const wrapper = document.getElementById('commentsWrapper');
+        const loading = document.getElementById('loadingComments');
+        const totalCommentsEl = document.getElementById('totalComments');
+        
+        loading.style.display = 'none';
+        wrapper.innerHTML = '';
+
+        let globalCount = 0;
+        let hasComments = false;
+
+        lessonsList.forEach(lesson => {
+            const lessonData = allCommentsData[lesson.id] || { comments: {}, lessonTitle: lesson.title };
+            const lessonComments = lessonData.comments;
+            const commentsArray = Object.entries(lessonComments).map(([id, data]) => ({ id, ...data }));
+            
+            commentsArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            globalCount += commentsArray.length;
+
+            if (commentsArray.length > 0) {
+                hasComments = true;
+            }
+
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'lesson-card';
+            
+            let commentsHtml = '';
+            if (commentsArray.length > 0) {
+                commentsArray.forEach(comment => {
+                    const date = new Date(comment.timestamp).toLocaleDateString('ar-EG', {
+                        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                    });
+
+                    commentsHtml += `
+                        <div class="admin-comment-card" id="comment_${lesson.id}_${comment.id}">
+                            <div class="comment-content">
+                                <div class="comment-meta">
+                                    <span class="user-name"><i class="fas fa-user-circle"></i> ${comment.userName || 'مستخدم'}</span>
+                                    <span class="comment-date">${date}</span>
+                                </div>
+                                <div class="comment-text">${comment.text || ''}</div>
+                            </div>
+                            <button class="delete-btn" onclick="deleteComment('${lesson.id}', '${comment.id}', this.parentElement)">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                });
+            } else {
+                commentsHtml = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>لا توجد تعليقات في هذا الدرس</p>
+                    </div>
+                `;
+            }
+
+            const isExpanded = expandedCards[lesson.id] ? 'expanded' : '';
+            const iconRotation = expandedCards[lesson.id] ? '' : 'rotated';
+
+            cardDiv.innerHTML = `
+                <div class="lesson-card-header" onclick="toggleCard('${lesson.id}')">
+                    <div class="lesson-info">
+                        <div class="lesson-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <span class="lesson-name">${lessonData.lessonTitle || 'درس'}</span>
+                    </div>
+                    <div class="lesson-actions">
+                        <span class="comment-count-badge">${commentsArray.length} تعليق</span>
+                        <div class="toggle-icon ${iconRotation}" id="toggleIcon_${lesson.id}">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lesson-card-body ${isExpanded}" id="cardBody_${lesson.id}">
+                    <div class="card-actions-bar">
+                        <span style="color: #8892B0; font-size: 14px;">
+                            <i class="fas fa-info-circle"></i>
+                            إدارة تعليقات ${lessonData.lessonTitle || 'الدرس'}
+                        </span>
+                        ${commentsArray.length > 0 ? `
+                            <button class="delete-all-btn" onclick="deleteAllComments('${lesson.id}')">
+                                <i class="fas fa-trash-alt"></i>
+                                حذف كل التعليقات
+                            </button>
+                        ` : ''}
+                    </div>
+                    ${commentsHtml}
+                </div>
+            `;
+            wrapper.appendChild(cardDiv);
+        });
+
+        totalCommentsEl.textContent = globalCount;
+
+        if (!hasComments) {
+            wrapper.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>لا توجد تعليقات في أي درس حتى الآن</p>
+                </div>
+            `;
+        }
+    }
+
+    function setupRealtimeListeners() {
+        // مراقبة تغييرات الدروس
+        const lessonsRef = ref(db, 'lessons');
+        onValue(lessonsRef, () => {
+            loadLessons();
+            fetchAllCommentsData();
+        });
+
+        // مراقبة تغييرات التعليقات
+        onValue(ref(db, 'videos'), () => {
+            fetchAllCommentsData();
+        });
+
+        // مراقبة تغييرات المستخدمين
+        const usersRef = ref(db, 'users');
+        onValue(usersRef, () => {
+            loadUsers();
+        });
+    }
+
+    // Load all data
+    loadLessons();
+    loadUsers();
+    fetchAllCommentsData();
+    setupRealtimeListeners();
+
+</script>
+
+</body>
+</html>

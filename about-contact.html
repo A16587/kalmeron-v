@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن واتصل بنا - منصة الطالب الذكي</title>
+    <!-- نفس خطوط الموقع الأصلي Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Cairo", sans-serif;
+            background: linear-gradient(135deg, #0A192F, #112240);
+            color: #CCD6F6;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .about-card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(17, 34, 64, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 30px 50px -20px #000000cc;
+        }
+        .about-image {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .about-image i {
+            font-size: 5rem;
+            color: #64FFDA;
+            filter: drop-shadow(0 0 15px rgba(100, 255, 218, 0.5));
+            background: rgba(100, 255, 218, 0.1);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            color: #64FFDA;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64FFDA;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.3);
+            padding-bottom: 1rem;
+        }
+        
+        /* تنسيق الأقسام */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .about-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
+        .about-box {
+            background: rgba(10, 25, 47, 0.7);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 2px solid rgba(100, 255, 218, 0.2);
+            transition: 0.3s;
+        }
+        
+        .about-box:hover {
+            border-color: #64FFDA;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.2);
+        }
+        
+        .about-box h2 {
+            color: #64FFDA;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        
+        .about-box h2 i {
+            color: #64FFDA;
+        }
+        
+        .about-box p {
+            color: #CCD6F6;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .about-box ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .about-box ul li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #CCD6F6;
+        }
+        
+        .about-box ul li i {
+            color: #64FFDA;
+            width: 25px;
+            font-size: 1.1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 1rem;
+            border: 2px solid rgba(100, 255, 218, 0.2);
+        }
+        
+        .stat-item i {
+            font-size: 2rem;
+            color: #64FFDA;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #64FFDA;
+            line-height: 1.2;
+        }
+        
+        .stat-item .stat-label {
+            color: #CCD6F6;
+            font-size: 0.9rem;
+        }
+        
+        .contact-info {
+            margin-top: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.2rem;
+            padding: 0.8rem;
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 1rem;
+            transition: 0.3s;
+        }
+        
+        .contact-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateX(-5px);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64FFDA;
+            font-size: 1.5rem;
+            border: 2px solid #64FFDA;
+        }
+        
+        .contact-details {
+            flex: 1;
+        }
+        
+        .contact-details h3 {
+            color: #64FFDA;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .contact-details p {
+            color: #CCD6F6;
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .contact-details a {
+            color: #CCD6F6;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .contact-details a:hover {
+            color: #64FFDA;
+        }
+        
+        .back-home {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #64FFDA;
+            text-decoration: none;
+            border: 2px solid #64FFDA;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        
+        .back-home:hover {
+            background: #64FFDA;
+            color: #0A192F;
+            transform: translateY(-2px);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        @media (max-width: 480px) {
+            .values-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .value-item {
+            background: rgba(100, 255, 218, 0.05);
+            padding: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        
+        .value-item i {
+            color: #64FFDA;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .value-item h4 {
+            color: #64FFDA;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .value-item p {
+            color: #CCD6F6;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        @media (max-width: 600px) {
+            .about-card { padding: 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="about-card">
+            <!-- أيقونة الصفحة -->
+            <div class="about-image">
+                <i class="fas fa-users"></i>
+                <i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>
+            </div>
+            
+            <h1>من نحن واتصل بنا</h1>
+            <div class="subtitle">تعرف على فريق منصة الطالب الذكي وكيف تتواصل معنا</div>
+            
+            <!-- قسمين رئيسيين: من نحن + اتصل بنا -->
+            <div class="about-section">
+                <!-- القسم الأيمن: من نحن -->
+                <div class="about-box">
+                    <h2><i class="fas fa-users"></i> من نحن</h2>
+                    <p>منصة الطالب الذكي هي منصة تعليمية مصرية 100%، أطلقناها عشان نساعد طلاب الصف الأول والثاني الثانوي يفهموا مادة التاريخ بطريقة ممتعة ومبسطة.</p>
+                    <p>فكرتنا بدأت من 2026، وإحنا شغالين إننا نحول المناهج الدراسية التقليدية لفيديوهات كرتونية جذابة، عشان الطالب يحب المادة ويفهمها مش يحفظها بس.</p>
+                    
+                    <h3 style="color: #64FFDA; margin: 1.5rem 0 1rem;"><i class="fas fa-star"></i> رؤيتنا</h3>
+                    <p>نكون المنصة التعليمية الأولى في الوطن العربي اللي بتخلط بين المتعة والتعليم، ونخلي كل طالب ينتظر درس التاريخ بفارغ الصبر.</p>
+                    
+                    <h3 style="color: #64FFDA; margin: 1.5rem 0 1rem;"><i class="fas fa-bullseye"></i> رسالتنا</h3>
+                    <p>تقديم محتوى تعليمي مبسط، دقيق، وممتع للطلاب، باستخدام أحدث تقنيات الرسوم المتحركة، مع الحفاظ على جودة المعلومة وربطها بالمنهج الدراسي.</p>
+                    
+                    <!-- القيم الأساسية -->
+                    <h3 style="color: #64FFDA; margin: 1.5rem 0 1rem;">القيم اللي بنؤمن بها</h3>
+                    <div class="values-list">
+                        <div class="value-item">
+                            <i class="fas fa-heart"></i>
+                            <h4>حب المعرفة</h4>
+                            <p>نخلي الطالب يحب المادة</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>الجودة</h4>
+                            <p>محتوى 100% مطابق للمنهج</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-smile"></i>
+                            <h4>المتعة</h4>
+                            <p>التعلم بالضحك والمرح</p>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <h4>المجانية</h4>
+                            <p>التعليم حق للجميع</p>
+                        </div>
+                    </div>
+                    
+                    <!-- إحصائيات سريعة - فقط سنة التأسيس -->
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div class="stat-number">2026</div>
+                            <div class="stat-label">سنة التأسيس</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- القسم الأيسر: اتصل بنا -->
+                <div class="about-box">
+                    <h2><i class="fas fa-envelope"></i> اتصل بنا</h2>
+                    <p>عندك سؤال؟ استفسار؟ اقتراح؟ إحنا هنا عشان نسمعك ونساعدك في أي وقت.</p>
+                    
+                    <div class="contact-info">
+                        <!-- الموقع فقط (تم حذف البريد الإلكتروني والموبايل) -->
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>المقر الرئيسي</h3>
+                                <p>القاهرة، مصر</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ساعات العمل -->
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>ساعات العمل</h3>
+                                <p>السبت - الخميس: 9 صباحاً - 9 مساءً</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- نموذج المراسلة السريع (تم تعديله لحذف البريد الإلكتروني) -->
+                    <div style="margin-top: 2rem;">
+                        <h3 style="color: #64FFDA; margin-bottom: 1rem;">أو راسلنا مباشرة</h3>
+                        <form id="quickContactForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <input type="text" id="quickName" placeholder="الاسم بالكامل" required
+                                style="padding: 0.8rem; border: 2px solid #64FFDA; border-radius: 1rem; background: rgba(255,255,255,0.05); color: #CCD6F6; font-family: 'Cairo', sans-serif;">
+                            <input type="tel" id="quickPhone" placeholder="رقم الموبايل (واتساب)" required
+                                style="padding: 0.8rem; border: 2px solid #64FFDA; border-radius: 1rem; background: rgba(255,255,255,0.05); color: #CCD6F6; font-family: 'Cairo', sans-serif;">
+                            <textarea id="quickMessage" placeholder="رسالتك..." rows="3" required
+                                style="padding: 0.8rem; border: 2px solid #64FFDA; border-radius: 1rem; background: rgba(255,255,255,0.05); color: #CCD6F6; font-family: 'Cairo', sans-serif; resize: vertical;"></textarea>
+                            <button type="submit" 
+                                style="background: #64FFDA; color: #0A192F; border: none; padding: 0.8rem; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s;">
+                                <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                            </button>
+                        </form>
+                        <div id="quickSuccessMessage" style="display: none; text-align: center; color: #64FFDA; margin-top: 1rem;">
+                            <i class="fas fa-check-circle"></i> تم إرسال رسالتك بنجاح! سنرد عليك قريباً.
+                        </div>
+                    </div>
+                    
+                    <!-- تم حذف روابط التواصل الاجتماعي بالكامل -->
+                </div>
+            </div>
+
+            <!-- العودة للصفحة الرئيسية -->
+            <div class="text-center">
+                <a href="index.html" class="back-home"><i class="fas fa-home"></i> العودة للصفحة الرئيسية</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+        
+        // Firebase configuration (نفس إعدادات موقعك الأساسي)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDv348xdxShxrVVAEtIlCpeBfKqvOfY-0o",
+            authDomain: "talk-19c55.firebaseapp.com",
+            databaseURL: "https://talk-19c55-default-rtdb.firebaseio.com",
+            projectId: "talk-19c55",
+            storageBucket: "talk-19c55.firebasestorage.app",
+            messagingSenderId: "908101479029",
+            appId: "1:908101479029:web:4e10b04f96fed9e16a663c",
+            measurementId: "G-QG2G56Z6DH"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Handle quick contact form submission
+        document.getElementById('quickContactForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('quickName').value;
+            const phone = document.getElementById('quickPhone').value;
+            const message = document.getElementById('quickMessage').value;
+            
+            try {
+                // Save to Firebase
+                const messagesRef = ref(database, 'messages');
+                await push(messagesRef, {
+                    fullName: name,
+                    phoneNumber: phone,
+                    message: message,
+                    timestamp: Date.now(),
+                    read: false,
+                    source: 'about_page'
+                });
+                
+                // Hide form and show success message
+                document.getElementById('quickContactForm').style.display = 'none';
+                document.getElementById('quickSuccessMessage').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('quickContactForm').reset();
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+            }
+        });
+    </script>
+</body>
+</html>
