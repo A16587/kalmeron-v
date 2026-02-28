@@ -951,7 +951,7 @@
     let currentUser = null;
     let lessons = [];
     let totalLessons = 0;
-    let unreadNotifications = 0;
+    let unreadNotificationsCount = 0;
    
     // Load everything when page starts
     window.onload = async function() {
@@ -970,7 +970,9 @@
                 await updateProgress();
                 await updateProfileCompleted();
                 await loadCompletedStatus();
-                await loadNotifications();
+                
+                // تحميل الإشعارات
+                loadNotifications();
             } else {
                 localStorage.removeItem("userId");
                 userId = null;
@@ -1166,6 +1168,8 @@
    
     // Add notification
     async function addNotification(userId, type, message, relatedId = null) {
+        if (!userId) return;
+        
         try {
             const notificationsRef = ref(db, `users/${userId}/notifications`);
             const newNotificationRef = push(notificationsRef);
@@ -1176,8 +1180,35 @@
                 timestamp: new Date().toISOString(),
                 read: false
             });
+            console.log("تم إضافة الإشعار:", message);
+            
+            // تحديث العداد فوراً
+            updateNotificationBadge(userId);
+            
         } catch (error) {
             console.error("خطأ في إضافة الإشعار:", error);
+        }
+    }
+    
+    // دالة تحديث عداد الإشعارات
+    async function updateNotificationBadge(userId) {
+        if (!userId) return;
+        
+        try {
+            const snapshot = await get(ref(db, `users/${userId}/notifications`));
+            const badge = document.getElementById('notificationsBadge');
+            
+            if (snapshot.exists()) {
+                const notifications = snapshot.val();
+                const unreadCount = Object.values(notifications).filter(n => !n.read).length;
+                badge.textContent = unreadCount;
+                unreadNotificationsCount = unreadCount;
+            } else {
+                badge.textContent = '0';
+                unreadNotificationsCount = 0;
+            }
+        } catch (error) {
+            console.error("خطأ في تحديث عداد الإشعارات:", error);
         }
     }
    
@@ -1200,8 +1231,9 @@
                 .map(([id, data]) => ({ id, ...data }))
                 .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
           
-            unreadNotifications = notifications.filter(n => !n.read).length;
-            badge.textContent = unreadNotifications;
+            const unreadCount = notifications.filter(n => !n.read).length;
+            badge.textContent = unreadCount;
+            unreadNotificationsCount = unreadCount;
           
             let html = '';
             notifications.forEach(notif => {
@@ -1235,7 +1267,11 @@
             await update(ref(db, `users/${userId}/notifications/${notificationId}`), {
                 read: true
             });
-            loadNotifications();
+            
+            // تحديث الإشعارات والعداد
+            await loadNotifications();
+            await updateNotificationBadge(userId);
+            
         } catch (error) {
             console.error("خطأ في تحديث الإشعار:", error);
         }
@@ -1255,33 +1291,11 @@
         // تبديل لوحة الإشعارات
         panel.style.display = panel.style.display === "block" ? "none" : "block";
       
-        // Mark all as read when opening
-        if (panel.style.display === "block" && unreadNotifications > 0) {
-            markAllNotificationsRead();
+        // تحديث الإشعارات عند الفتح
+        if (panel.style.display === "block") {
+            loadNotifications();
         }
     };
-   
-    // Mark all notifications as read
-    async function markAllNotificationsRead() {
-        if (!userId) return;
-      
-        try {
-            const snapshot = await get(ref(db, `users/${userId}/notifications`));
-            if (snapshot.exists()) {
-                const notifications = snapshot.val();
-                for (let id in notifications) {
-                    if (!notifications[id].read) {
-                        await update(ref(db, `users/${userId}/notifications/${id}`), {
-                            read: true
-                        });
-                    }
-                }
-                loadNotifications();
-            }
-        } catch (error) {
-            console.error("خطأ في تحديث الإشعارات:", error);
-        }
-    }
    
     // Update progress bar
     async function updateProgress() {
@@ -1363,7 +1377,7 @@
             await loadCompletedStatus();
           
             // إشعار ترحيبي
-            await addNotification(userId, 'welcome', '👋 مرحباً بك في منصة الطالب الذكي! ابدأ رحلتك التعليمية الآن');
+            await addNotification(userId, 'welcome', '👋 مرحباً بك في منصة كالميرون! ابدأ رحلتك التعليمية الآن');
           
         } catch (error) {
             console.error("خطأ:", error);
@@ -1425,6 +1439,7 @@
             const likeIcon = document.getElementById(`likeIcon_${videoId}`);
             const userLikeRef = ref(db, `videos/${videoId}/likes/${userId}`);
             const snapshot = await get(userLikeRef);
+            
             if (snapshot.exists()) {
                 await remove(userLikeRef);
                 likeBtn.classList.remove("liked");
@@ -1437,11 +1452,20 @@
                 });
                 likeBtn.classList.add("liked");
                 likeIcon.className = "fas fa-heart";
+                
+                // إضافة إشعار عند الإعجاب
+                await addNotification(userId, 'like', `❤️ أعجب بدرس: ${getLessonTitle(videoId)}`);
             }
         } catch (error) {
             console.error("خطأ:", error);
         }
     };
+    
+    // دالة مساعدة للحصول على عنوان الدرس
+    function getLessonTitle(videoId) {
+        const lesson = lessons.find(l => l.id === videoId);
+        return lesson ? lesson.title : 'الدرس';
+    }
    
     // Load likes for video
     async function loadLikes(videoId) {
@@ -1516,6 +1540,9 @@
                 timestamp: new Date().toISOString()
             });
             input.value = "";
+            
+            // إضافة إشعار عند إضافة تعليق
+            await addNotification(userId, 'comment', `💬 أضفت تعليقاً على درس: ${getLessonTitle(videoId)}`);
           
         } catch (error) {
             console.error("خطأ:", error);
@@ -1548,27 +1575,33 @@
    
     // Load comment likes
     async function loadCommentLikes(videoId, commentId) {
+        if (!userId) return;
+        
         const likeBtn = document.getElementById(`commentLikeBtn_${videoId}_${commentId}`);
         const likeIcon = document.getElementById(`commentLikeIcon_${videoId}_${commentId}`);
         const countEl = document.getElementById(`commentLikeCount_${videoId}_${commentId}`);
       
         if (!likeBtn || !likeIcon || !countEl) return;
       
-        const userLikeRef = ref(db, `videos/${videoId}/comments/${commentId}/likes/${userId}`);
-        const snapshot = await get(userLikeRef);
-        if (snapshot.exists()) {
-            likeBtn.classList.add("liked");
-            likeIcon.className = "fas fa-heart";
-        } else {
-            likeBtn.classList.remove("liked");
-            likeIcon.className = "far fa-heart";
+        try {
+            const userLikeRef = ref(db, `videos/${videoId}/comments/${commentId}/likes/${userId}`);
+            const snapshot = await get(userLikeRef);
+            if (snapshot.exists()) {
+                likeBtn.classList.add("liked");
+                likeIcon.className = "fas fa-heart";
+            } else {
+                likeBtn.classList.remove("liked");
+                likeIcon.className = "far fa-heart";
+            }
+          
+            const likesRef = ref(db, `videos/${videoId}/comments/${commentId}/likes`);
+            onValue(likesRef, (snap) => {
+                const count = snap.val() ? Object.keys(snap.val()).length : 0;
+                countEl.textContent = count;
+            });
+        } catch (error) {
+            console.error("خطأ في تحميل إعجابات التعليق:", error);
         }
-      
-        const likesRef = ref(db, `videos/${videoId}/comments/${commentId}/likes`);
-        onValue(likesRef, (snap) => {
-            const count = snap.val() ? Object.keys(snap.val()).length : 0;
-            countEl.textContent = count;
-        });
     }
    
     // Add reply to comment
@@ -1597,7 +1630,7 @@
                 const commentData = commentSnapshot.val();
                 if (commentData.userId !== userId) {
                     await addNotification(commentData.userId, 'reply',
-                        `💬 ${currentUser.name} قام بالرد على تعليقك في الدرس`);
+                        `💬 ${currentUser.name} قام بالرد على تعليقك في الدرس: ${getLessonTitle(videoId)}`);
                 }
             }
           
@@ -1637,7 +1670,7 @@
             </button>
         `;
       
-        document.getElementById(`comment_${videoId}_${comment.id}`).appendChild(replyContainer);
+        document.getElementById(`comment_${videoId}_${commentId}`).appendChild(replyContainer);
         document.getElementById(`${replyInputId}_field`).focus();
     };
    
@@ -1743,6 +1776,7 @@
             const snapshot = await get(completedRef);
             const lesson = lessons.find(l => l.id === videoId);
             const userRef = ref(db, "users/" + userId);
+            
             if (snapshot.exists()) {
                 // Uncomplete
                 await remove(completedRef);
@@ -1762,6 +1796,7 @@
                 });
                 // إضافة إشعار عند الإكمال
                 await addNotification(userId, 'lesson', `✅ تهانينا! أكملت درس: ${lesson.title}`);
+                
                 // التحقق من أول درس
                 const completedSnapshot = await get(ref(db, `users/${userId}/completed`));
                 const completedCount = completedSnapshot.exists() ? Object.keys(completedSnapshot.val()).length : 0;
